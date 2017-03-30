@@ -1,17 +1,11 @@
 {
-    "name": "league/:package_name",
-    "description": ":package_description",
-    "keywords": [
-        "league",
-        "package"
-    ],
-    "homepage": "https://github.com/php-loep/:package_name",
+    "name": "folleah5/currency",
+    "description": "Simple currency converter",
+    "homepage": "https://github.com/folleah5/currency",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author_email@example.com",
-            "homepage": "http://author-website.example.com",
+            "name": "Folleah",
             "role": "Developer"
         }
     ],
@@ -23,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "League\\Skeleton\\": "src"
+            "Folleah\\Currency\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "League\\Skeleton\\Test\\": "tests"
+            "Folleah\\Currency\\Test\\": "tests"
         }
     },
     "extra": {

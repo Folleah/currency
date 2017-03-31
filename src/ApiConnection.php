@@ -2,14 +2,14 @@
 
 namespace Folleah\Currency;
 
-class ApiConnection
+final class ApiConnection
 {
     protected $apiService;
 
     /**
      * Create a new API connection
-     * @param $serviceName string
-     * @param $params array
+     * @param String $serviceName
+     * @param Array $params
      */
     public function __construct($serviceName, $params)
     {

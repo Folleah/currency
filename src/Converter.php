@@ -2,14 +2,18 @@
 
 namespace Folleah\Currency;
 
+use Folleah\Currency\ConverterLogic;
+
 class Converter
 {
     private $connection;
+    private $currentCurrency;
+    private $currentValue;
 
     /**
      * Create a new converter
-     * @param $connection ApiConnection
-     * @param $currency String - current currency
+     * @param ApiConnection $connection
+     * @param String $currency - current currency
      */
     public function __construct(ApiConnection $connection)
     {
@@ -32,26 +36,30 @@ class Converter
         $this->connection = $connection;
     }
 
-    public function from($currency, $value)
+    public function from($currency)
     {
-        $this->currentCurrency = $currency;
+        if($this->connection->isCurrencyAvailable($currency))
+        {
+            $this->currentCurrency = $currency;
+            return $this;
+        }
+    }
+
+    public function value($value)
+    {
+        $this->currentValue = $value;
         return $this;
     }
 
     public function convertTo($currency)
     {
-        $val = $this->currentCurrency;
+        $allCurrencies = $this->connection->getAllCurrencies();
 
+        $val = ConverterLogic::convert(
+            $allCurrencies[$this->currentCurrency],
+            $allCurrencies[$currency],
+            $this->currentValue
+        );
         return $val;
-    }
-
-    protected function currencyRoundTo($val)
-    {
-        return round($val, 2) * 100;
-    }
-
-    protected function currencyRoundFrom($val)
-    {
-        return $val / 100;
     }
 }

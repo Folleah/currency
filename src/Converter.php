@@ -3,19 +3,18 @@
 namespace Folleah\Currency;
 
 use Folleah\Currency\ConverterLogic;
+use Folleah\Currency\ApiServices\ApiServiceInterface;
 
 class Converter
 {
     private $connection;
-    private $currentCurrency;
-    private $currentValue;
 
     /**
      * Create a new converter
      * @param ApiConnection $connection
      * @param String $currency - current currency
      */
-    public function __construct(ApiConnection $connection)
+    public function __construct(ApiServiceInterface $connection)
     {
         $this->connection = $connection;
     }
@@ -31,34 +30,19 @@ class Converter
     /**
      * @param ApiConnection $connection - set new connection
      */
-    public function setConnection(ApiConnection $connection)
+    public function setConnection(ApiServiceInterface $connection)
     {
         $this->connection = $connection;
     }
 
-    public function from($currency)
-    {
-        if($this->connection->isCurrencyAvailable($currency))
-        {
-            $this->currentCurrency = $currency;
-            return $this;
-        }
-    }
-
-    public function value($value)
-    {
-        $this->currentValue = $value;
-        return $this;
-    }
-
-    public function convertTo($currency)
+    public function convert($currentCurrency, $value, $currency)
     {
         $allCurrencies = $this->connection->getAllCurrencies();
 
         $val = ConverterLogic::convert(
-            $allCurrencies[$this->currentCurrency],
+            $allCurrencies[$currentCurrency],
             $allCurrencies[$currency],
-            $this->currentValue
+            $value
         );
         return $val;
     }

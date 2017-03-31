@@ -2,7 +2,10 @@
 
 namespace Folleah\Currency\ApiServices\OpenExchange;
 
-class ApiService extends \Folleah\Currency\ApiServices\ApiServiceDecorator
+use Folleah\Currency\ApiServices\ApiQueryBuilder;
+use Folleah\Currency\ApiServices\ApiServiceInterface;
+
+class ApiService implements ApiServiceInterface
 {
     private $baseCurrency;
     private $currencies = [];
@@ -11,7 +14,7 @@ class ApiService extends \Folleah\Currency\ApiServices\ApiServiceDecorator
     public function __construct($params)
     {
         $url = "https://openexchangerates.org/api/latest.json";
-        $query = parent::httpQuery($url, $params);
+        $query = ApiQueryBuilder::httpQueryJSON($url, $params);
 
         $this->params = $params;
         $this->baseCurrency = $query['base'];
@@ -30,7 +33,7 @@ class ApiService extends \Folleah\Currency\ApiServices\ApiServiceDecorator
     {
         $url = "https://openexchangerates.org/api/latest.json";
 
-        return parent::httpQuery($url, $this->params)['rates'];
+        return ApiQueryBuilder::httpQueryJSON($url, $this->params)['rates'];
     }
 
     public function getAvailableCurrencies()

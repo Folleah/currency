@@ -12,16 +12,14 @@ $ composer require folleah/currency
 
 ``` php
 <?php
-Use Folleah\Currency\ApiConnection;
-Use Folleah\Currency\Converter;
+use \Folleah\Currency\Converter;
+use \Folleah\Currency\ApiServices\OpenExchange\ApiService;
 
 $appKey = 'YOUR_OPENEXCHANGE_APP_KEY';
 
-$connection = new ApiConnection('OpenExchange', ['app_id' => $appKey]);
+$converter = new Converter(new ApiService(['app_id' => $appKey]));
 
-$converter = new Converter($connection);
-
-echo $converter->from('USD')->value(1)->convertTo('RUB');
+echo $converter->convert('USD', 1, 'RUB');
 ```
 
 ## Testing

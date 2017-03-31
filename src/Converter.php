@@ -11,8 +11,7 @@ class Converter
 
     /**
      * Create a new converter
-     * @param ApiConnection $connection
-     * @param String $currency - current currency
+     * @param ApiServiceInterface $connection
      */
     public function __construct(ApiServiceInterface $connection)
     {
@@ -20,7 +19,7 @@ class Converter
     }
 
     /**
-     * @return ApiConnection current connection
+     * @return ApiService current connection
      */
     public function getConnection()
     {
@@ -28,13 +27,19 @@ class Converter
     }
 
     /**
-     * @param ApiConnection $connection - set new connection
+     * @param ApiServiceInterface $connection - set new connection
      */
     public function setConnection(ApiServiceInterface $connection)
     {
         $this->connection = $connection;
     }
 
+    /**
+     * Convert $currentCurrency to $currency in $value
+     * @param String $currentCurrency
+     * @param Float $value
+     * @param String $currency
+     */
     public function convert($currentCurrency, $value, $currency)
     {
         $allCurrencies = $this->connection->getAllCurrencies();

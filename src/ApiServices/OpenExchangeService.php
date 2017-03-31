@@ -1,11 +1,11 @@
 <?php
 
-namespace Folleah\Currency\ApiServices\OpenExchange;
+namespace Folleah\Currency\ApiServices;
 
 use Folleah\Currency\ApiServices\ApiQueryBuilder;
 use Folleah\Currency\ApiServices\ApiServiceInterface;
 
-class ApiService implements ApiServiceInterface
+class OpenExchangeService implements ApiServiceInterface
 {
     private $baseCurrency;
     private $currencies = [];

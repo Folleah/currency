@@ -2,18 +2,14 @@
 
 namespace Folleah\Currency;
 
-use Money\Currency;
-use Money\Money;
-
 class Converter
 {
-    protected $connection;
-    protected $baseCurrency;
+    private $connection;
 
     /**
-     * Create a new API connection
-     * @param $serviceName String
-     * @param $params Array
+     * Create a new converter
+     * @param $connection ApiConnection
+     * @param $currency String - current currency
      */
     public function __construct(ApiConnection $connection)
     {
@@ -36,15 +32,26 @@ class Converter
         $this->connection = $connection;
     }
 
-    public function setCurrentCurrency($currency)
+    public function from($currency, $value)
     {
-        $this->baseCurrency = $currency;
+        $this->currentCurrency = $currency;
+        return $this;
     }
 
-    public function getCurrentCurrency()
+    public function convertTo($currency)
     {
-        return $this->baseCurrency;
+        $val = $this->currentCurrency;
+
+        return $val;
     }
 
-    public function 
+    protected function currencyRoundTo($val)
+    {
+        return round($val, 2) * 100;
+    }
+
+    protected function currencyRoundFrom($val)
+    {
+        return $val / 100;
+    }
 }

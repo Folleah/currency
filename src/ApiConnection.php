@@ -16,7 +16,7 @@ class ApiConnection
         if(is_dir(__DIR__."/ApiServices/".$serviceName))
         {
         	$adapter = __NAMESPACE__."\ApiServices\\{$serviceName}\\ApiAdapter";
-        	$this->apiAdapter = new $adapter();
+        	$this->apiAdapter = new $adapter($params);
         } 
         else 
         {
@@ -27,8 +27,8 @@ class ApiConnection
     /**
      * Getting available currencies in API
      */
-    public function getAvailableCurrencies()
+    public function getAllCurrencies()
     {
-    	return $this->apiAdapter->getAvailableCurrencies();
+    	return $this->apiAdapter->getAllCurrencies();
     }
 }

@@ -8,14 +8,17 @@ use Folleah\Currency\ApiServices\ApiServiceInterface;
 class Converter
 {
     private $connection;
+    private $precision;
 
     /**
      * Create a new converter
      * @param ApiServiceInterface $connection
+     * @param Integer $precision - set the number of decimal places
      */
-    public function __construct(ApiServiceInterface $connection)
+    public function __construct(ApiServiceInterface $connection, $pricision = 2)
     {
         $this->connection = $connection;
+        $this->pricision = $pricision;
     }
 
     /**
@@ -68,6 +71,6 @@ class Converter
      */
     private function roundFrom($val)
     {
-        return round($val / 100, 2);
+        return round($val / 100, $this->pricision);
     }
 }

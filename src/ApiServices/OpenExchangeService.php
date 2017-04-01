@@ -2,48 +2,38 @@
 
 namespace Folleah\Currency\ApiServices;
 
-use Folleah\Currency\ApiServices\ApiQueryBuilder;
+use \GuzzleHttp;
 use Folleah\Currency\ApiServices\ApiServiceInterface;
 
 class OpenExchangeService implements ApiServiceInterface
 {
-    private $baseCurrency;
+   
     private $currencies = [];
-    private $params;
 
     public function __construct($params)
     {
-        $url = "https://openexchangerates.org/api/latest.json";
-        $query = ApiQueryBuilder::httpQueryJSON($url, $params);
+        $client = new GuzzleHttp\Client();
 
-        $this->params = $params;
-        $this->baseCurrency = $query['base'];
-        $this->currencies = array_keys($query['rates']);
-    }
-
-    private function setBaseCurrency($currency)
-    {
-        if(isCurrencyAvailable($currency))
-        {
-            $this->baseCurrency = $currency;
-        }
+        $res = $client->request('GET', 'https://openexchangerates.org/api/latest.json', [
+            'query' => $params
+        ]);
+        
+        $this->currencies = json_decode($res->getBody(), true);
     }
 
     public function getAllCurrencies()
     {
-        $url = "https://openexchangerates.org/api/latest.json";
-
-        return ApiQueryBuilder::httpQueryJSON($url, $this->params)['rates'];
+        return $this->currencies['rates'];
     }
 
     public function getAvailableCurrencies()
     {
-        return $this->currencies;
+        return array_keys($this->currencies['rates']);
     }
 
     public function isCurrencyAvailable($currency)
     {
-        if(in_array($currency, $this->currencies))
+        if(in_array($currency, array_keys($this->currencies['rates'])))
         {
             return true;
         }

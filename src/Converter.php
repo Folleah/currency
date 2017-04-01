@@ -15,10 +15,19 @@ class Converter
      * @param ApiServiceInterface $connection
      * @param Integer $precision - set the number of decimal places
      */
-    public function __construct(ApiServiceInterface $connection, $pricision = 2)
+    public function __construct(ApiServiceInterface $connection, $precision = 2)
     {
         $this->connection = $connection;
-        $this->pricision = $pricision;
+
+        if(is_int($precision))
+        {
+            $this->precision = $precision;
+        }
+        else
+        {
+            throw new \Exception("Use integer value in precision attribute");
+            
+        }
     }
 
     /**
@@ -71,6 +80,6 @@ class Converter
      */
     private function roundFrom($val)
     {
-        return round($val / 100, $this->pricision);
+        return round($val / 100, $this->precision);
     }
 }

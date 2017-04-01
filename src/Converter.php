@@ -64,7 +64,7 @@ class Converter
 
     /**
      * Typecasting integer currency value to float
-     * @param Float $val - value
+     * @param Integer $val - value
      */
     private function roundFrom($val)
     {

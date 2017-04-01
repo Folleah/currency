@@ -44,11 +44,21 @@ class Converter
     {
         $allCurrencies = $this->connection->getAllCurrencies();
 
-        $val = ConverterLogic::convert(
-            $allCurrencies[$currentCurrency],
-            $allCurrencies[$currency],
-            $value
-        );
-        return $val;
+        $val = 
+            $this->roundTo($allCurrencies[$currency])
+            * $this->roundTo($value)
+            / $this->roundTo($allCurrencies[$currentCurrency]);
+    
+        return $this->roundFrom($val);
+    }
+
+    private function roundTo($val)
+    {
+        return (int)(round($val, 2) * 100);
+    }
+
+    private function roundFrom($val)
+    {
+        return round($val / 100, 2);
     }
 }

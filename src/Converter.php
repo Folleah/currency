@@ -19,22 +19,6 @@ class Converter
     }
 
     /**
-     * @return ApiService current connection
-     */
-    public function getConnection()
-    {
-        return $this->connection;
-    }
-
-    /**
-     * @param ApiServiceInterface $connection - set new connection
-     */
-    public function setConnection(ApiServiceInterface $connection)
-    {
-        $this->connection = $connection;
-    }
-
-    /**
      * Convert $currentCurrency to $currency in $value
      * @param String $currentCurrency
      * @param Float $value
@@ -52,11 +36,36 @@ class Converter
         return $this->roundFrom($val);
     }
 
+    /**
+     * @return Array - return available currencies array in ISO 4217 format
+     */
+    public function getAvailableCurrencies()
+    {
+        return $this->connection->getAvailableCurrencies();
+    }
+
+    /**
+     * @param String $currency - currency code in ISO 4217 format
+     * @return Boolean true | false
+     */
+    public function isCurrencyAvailable($currency)
+    {
+        return $this->connection->isCurrencyAvailable($currency);
+    }
+
+    /**
+     * Typecasting float currency value to integer
+     * @param Float $val - value
+     */
     private function roundTo($val)
     {
         return (int)(round($val, 2) * 100);
     }
 
+    /**
+     * Typecasting integer currency value to float
+     * @param Float $val - value
+     */
     private function roundFrom($val)
     {
         return round($val / 100, 2);

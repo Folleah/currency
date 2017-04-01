@@ -12,14 +12,17 @@ $ composer require folleah/currency
 
 ``` php
 <?php
-use \Folleah\Currency\Converter;
-use \Folleah\Currency\ApiServices\OpenExchange\ApiService;
+    use \Folleah\Currency\Converter;
+    use \Folleah\Currency\ApiServices\OpenExchangeService;
 
-$appKey = 'YOUR_OPENEXCHANGE_APP_KEY';
+    $app_id = '86c1eb0cf61a40b7a8710343d721dcdf';
 
-$converter = new Converter(new ApiService(['app_id' => $appKey]));
+    $converter = new Converter(new OpenExchangeService(['app_id' => $app_id]));
 
-echo $converter->convert('USD', 1, 'RUB');
+    if($converter->isCurrencyAvailable('RUB') && $converter->isCurrencyAvailable('EUR'))
+    {
+        echo $converter->convert('RUB', 50, 'EUR'); 
+    }
 ```
 
 ## Testing
